@@ -1,0 +1,33 @@
+service: bliblou-roles-config
+
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle
+  - serverless-offline
+  - serverless-dotenv-plugin
+  - serverless-cf-vars
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: test
+  region: eu-west-1
+
+custom:
+  product: bliblou
+  stage: ${opt:stage, self:provider.stage}
+  identityPoolId: !ImportValue ${self:custom.product}-${self:custom.stage}-IdentityPoolId
+  userPoolProviderName: !ImportValue ${self:custom.product}-${self:custom.stage}-UserPoolProviderName
+  userPoolClient: !ImportValue ${self:custom.product}-${self:custom.stage}-UserPoolClient
+  recipesApiGateway: d7k5wwpetd # !ImportValue ${self:custom.product}-${self:custom.stage}-RecipesApiGateway
+  recipePicturesBucketArn: arn:aws:s3:::bliblou-recipes-api-test-picturesbucket-8fyx89cai7fu # !ImportValue ${self:custom.product}-${self:custom.stage}-RecipePicturesBucketArn
+
+functions:
+  mapRole:
+    handler: handler.mapRole
+
+resources:
+  - ${file(resources/cognito-roles-mapping.yml)}
+

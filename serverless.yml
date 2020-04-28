@@ -21,8 +21,8 @@ custom:
   identityPoolId: !ImportValue ${self:custom.product}-${self:custom.stage}-IdentityPoolId
   userPoolProviderName: !ImportValue ${self:custom.product}-${self:custom.stage}-UserPoolProviderName
   userPoolClient: !ImportValue ${self:custom.product}-${self:custom.stage}-UserPoolClient
-  recipesApiGateway: d7k5wwpetd # !ImportValue ${self:custom.product}-${self:custom.stage}-RecipesApiGateway
-  recipePicturesBucketArn: arn:aws:s3:::bliblou-recipes-api-test-picturesbucket-8fyx89cai7fu # !ImportValue ${self:custom.product}-${self:custom.stage}-RecipePicturesBucketArn
+  recipesApiGateway: !ImportValue ${self:custom.product}-${self:custom.stage}-RecipesApiGateway
+  recipePicturesBucketArn: !ImportValue ${self:custom.product}-${self:custom.stage}-RecipePicturesBucketArn
 
 functions:
   mapRole:
